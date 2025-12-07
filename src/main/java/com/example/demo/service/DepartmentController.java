@@ -1,45 +1,35 @@
-package com.example.demo.controller;
+package com.example.demo.service;
 
 import com.example.demo.model.Department;
-import com.example.demo.service.DepartmentService;
+import com.example.demo.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/departments")
-public class DepartmentController {
+@Service
+public class DepartmentService {
 
     @Autowired
-    private DepartmentService service;
+    private DepartmentRepository repository;
 
-    @GetMapping
     public List<Department> getAllDepartments() {
-        return service.getAllDepartments();
+        return repository.findAll();
     }
 
-    @GetMapping("/{dno}")
-    public Department getDepartmentById(@PathVariable int dno) {
-        return service.getDepartmentById(dno);
+    public Department getDepartmentById(int dno) {
+        return repository.findById(dno);
     }
 
-    @PostMapping
-    public String addDepartment(@RequestBody Department dept) {
-        service.addDepartment(dept);
-        return "Department added successfully!";
+    public int addDepartment(Department dept) {
+        return repository.save(dept);
     }
 
-    @PutMapping("/{dno}")
-    public String updateDepartment(@PathVariable int dno, @RequestBody Department dept) {
-        dept.setDno(dno);
-        service.updateDepartment(dept);
-        return "Department updated successfully!";
+    public int updateDepartment(Department dept) {
+        return repository.update(dept);
     }
 
-    @DeleteMapping("/{dno}")
-    public String deleteDepartment(@PathVariable int dno) {
-        service.deleteDepartment(dno);
-        return "Department deleted successfully!";
+    public int deleteDepartment(int dno) {
+        return repository.delete(dno);
     }
 }
