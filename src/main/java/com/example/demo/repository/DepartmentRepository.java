@@ -1,4 +1,3 @@
-Using JdbcTemplate for direct SQL operations:
 
 package com.example.demo.repository;
 
